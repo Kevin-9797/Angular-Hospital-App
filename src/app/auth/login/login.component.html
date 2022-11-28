@@ -1,0 +1,45 @@
+
+
+<div class="container">
+
+    <div class="login-container">
+        
+        <div class="card-login">
+
+
+            <mat-card class="card">
+               
+                <form [formGroup]="formLogin" (ngSubmit)="login()" class="formLogin">
+
+                    
+                    <div *ngFor="let item of dataInput" class="container-inputs">
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>{{ item.name }}</mat-label>
+                            <input [type]="item.type" [formControlName]="item.name" [value]="item.value!" matInput>
+                        </mat-form-field>
+                        <div class="error" *ngIf="isErrorForm('name')">{{ item.name }} is required</div>
+                        <div class="error" *ngIf="isErrorForm('email')">{{ item.name }} is required</div>
+                        <div class="error" *ngIf="isErrorForm('password')">{{ item.name }} is required</div>
+
+
+                    </div>
+                    <span class="example-list-section">
+                        <mat-checkbox class="example-margin"
+                                      [checked]="isChecked"
+                                      [color]="task.color"
+                                      [formControlName]="dataInputCheckbox.name"
+                                     >
+                          {{task.name}}
+                        </mat-checkbox>
+                      </span>
+                    <button mat-raised-button type="submit" color="primary">Primary</button>
+
+                </form>
+            </mat-card>
+        </div>
+
+
+    </div>
+
+</div>
