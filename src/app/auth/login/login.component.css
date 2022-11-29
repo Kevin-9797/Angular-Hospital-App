@@ -19,11 +19,16 @@
     justify-content: center;
     align-items: center;
 }
+.login-container .sign-in:checked+.item,
+.login-container .sign-up:checked+.item {
+    color: #fff;
+    border-color: #DF00FF;
+}
 
 .card {
     width: 400px;
     height: auto;
-    background-color: wheat;
+    background-color: white;
     padding: 4 4 4 4;
     -webkit-box-shadow: 2px 2px 14px -4px rgba(0,0,0,0.75);
     -moz-box-shadow: 2px 2px 14px -4px rgba(0,0,0,0.75);
@@ -31,22 +36,59 @@
     
 }
 
+.container-link{
+    display: flex;
+    height: 40px;
+    justify-content: space-around;
+}
+.container-link a{
+    position: relative;
+    text-decoration: none;
+    list-style-type: none;
+    color: black;
+    transition: 0.3s ease;
+}
+.container-link a:hover{
+    color:#DF00FF;
+    border-top: 3px #DF00FF solid ;
+    top: 0px;
+}
+
+.active{
+    color:#DF00FF;
+    border-top: 3px #DF00FF solid ;
+    top: 0px;
+}
+.container-link a::before {
+    position: absolute;
+    width: 12px;
+    height: 56px;
+    background-color: fuchsia;
+    top: 3px;
+    
+}
+
+
+
 .formLogin{
     display: flex;
     flex-wrap: wrap;
     width: auto;
-    height: 300px;
+    height: auto;
     padding: 3 3 3 3;
+    justify-content: center;
+    align-items: center;
 
+    
 }
 .error{
     color:red;
 }
-.container-inputs{
-    width: 300px;
-    justify-content: center;
-    align-items: center;
-    
+
+.container-terms{
+    padding-top: 23px;
+    padding-bottom: 23px;
+
 }
 
 

@@ -19,7 +19,6 @@ import { InputComponent } from '../components/input/input.component';
   exports: [
     LoginComponent,
     RegisterComponent,
-    CommonModule
   ],
   imports: [
     CommonModule,
@@ -29,6 +28,7 @@ import { InputComponent } from '../components/input/input.component';
     ReactiveFormsModule,
     MaterialModule,
     ComponentsModule,
+    RouterModule
     
   ]
 })
