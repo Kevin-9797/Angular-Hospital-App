@@ -20,9 +20,14 @@
                     
                     <div *ngFor="let item of dataInput; let i = index" class="container-inputs">
 
-                        <mat-form-field appearance="fill">
-                            <mat-label>{{ item.name }}</mat-label>
-                            <input [type]="item.type!" [formControlName]="item.name" [value]="item.value!" matInput>
+                        <mat-form-field appearance="fill" color="'accent'">
+                            <mat-label class="input-label">{{ item.name }}</mat-label>
+                            <input *ngIf="item.type !== 'password'" [type]="item.type!" [formControlName]="item.name" [value]="item.value!" matInput>
+                            <input *ngIf="item.type === 'password'" [type]="hidePassword ? 'password' : 'text' " [formControlName]="item.name" [value]="item.value!" matInput>
+
+                            <button *ngIf="item.name === 'password'" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                                <mat-icon>{{ hidePassword ? 'visibility_off' : 'remove_red_eye'}}</mat-icon>
+                              </button>
                             <mat-error *ngIf="myErrorForm(item.name, 'required')"> The {{ item.name }} is required</mat-error>
                             <mat-error *ngIf="myErrorForm(item.name, 'email')"> The {{ item.name }} is not a valid type</mat-error>
                             <mat-error *ngIf="myErrorForm(item.name, 'maxlength')"> The {{ item.name }} cannot exceed 8 characters</mat-error>

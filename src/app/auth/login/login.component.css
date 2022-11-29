@@ -15,6 +15,13 @@
     width: 100%;
     height: 100%;
     display: flex;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat-back.svg');
+	background-position: center;
+	background-repeat: repeat;
+	background-size: 7%;
+	background-color: #fff;
+	overflow-x: hidden;
+    transition: all 200ms linear;
     background-image: linear-gradient(30deg, rgba(121, 82, 119, 0.975) 30%, #355192 85%);
     justify-content: center;
     align-items: center;
@@ -28,48 +35,61 @@
 .card {
     width: 400px;
     height: auto;
-    background-color: white;
     padding: 4 4 4 4;
     -webkit-box-shadow: 2px 2px 14px -4px rgba(0,0,0,0.75);
     -moz-box-shadow: 2px 2px 14px -4px rgba(0,0,0,0.75);
     box-shadow: 2px 2px 14px -4px rgba(0,0,0,0.75);
-    
+    background:
+    linear-gradient(
+    rgba(35,43,85,0.75),
+    rgba(35,43,85,0.95));
+  background-size: cover;
 }
 
 .container-link{
     display: flex;
     height: 40px;
+    background-color: black;
     justify-content: space-around;
+    border-radius: 5px;
+    align-items: center;
 }
 .container-link a{
     position: relative;
     text-decoration: none;
     list-style-type: none;
-    color: black;
-    transition: 0.3s ease;
+    padding: 3px 15px;
+	color: white;
+	border-radius: 2px;
+    transition: all 200ms linear;
 }
-.container-link a:hover{
-    color:#DF00FF;
-    border-top: 3px #DF00FF solid ;
-    top: 0px;
-}
+
 
 .active{
-    color:#DF00FF;
-    border-top: 3px #DF00FF solid ;
-    top: 0px;
+    border-bottom: 7px #8167a9;
+
 }
-.container-link a::before {
-    position: absolute;
-    width: 12px;
-    height: 56px;
-    background-color: fuchsia;
-    top: 3px;
-    
+.container-link a:hover:after{
+    bottom: 0;
+    opacity: 1;
+}
+.container-link a:after {
+	position: absolute;
+	bottom: -5px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	content: '';
+	background-color: #8167a9;
+	opacity: 0;
+    transition: all 200ms linear;
 }
 
 
 
+.mat-form-field input{
+    color: white
+}
 .formLogin{
     display: flex;
     flex-wrap: wrap;
@@ -78,6 +98,9 @@
     padding: 3 3 3 3;
     justify-content: center;
     align-items: center;
+    margin-top: 10px;
+    background:transparent;
+  background-size: cover;
 
     
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, ValidationErrors, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material';
 import { Task } from 'src/app/material/interfaces/material.interface';
 import { DataInput, DataInputCheckbox } from '../interfaces/components.interface';
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   // })
 
 
-  constructor( private fb:FormBuilder ) { }
+  constructor( private fb:NonNullableFormBuilder ) { }
 
 
   task: Task = {
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   isChecked:boolean = false;
   formSubmitted:boolean = false;
-  
+  hidePassword:boolean = false;
   errorsValidation: ErrorsInterface[] = [];
 
   dataInput:DataInput[] = [
@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit {
 
       this.formLogin.addControl(e.name,new FormControl(e.value,e.validators))
     })
+    
     this.formLogin.addControl(this.dataInputCheckbox?.name,new FormControl(this.dataInputCheckbox.value,this.dataInputCheckbox.validators))
   }
 
