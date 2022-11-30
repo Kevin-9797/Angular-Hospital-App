@@ -14,12 +14,6 @@ import { ErrorsInterface } from '../interfaces/validations.interface';
 
 export class LoginComponent implements OnInit {
 
-  // public formLogin:FormGroup = this.fb.group({
-  //   name: [],
-  //   email: [],
-  //   password: []
-  // })
-
 
   constructor( private fb:NonNullableFormBuilder ) { }
 
@@ -35,23 +29,23 @@ export class LoginComponent implements OnInit {
   isChecked:boolean = false;
   formSubmitted:boolean = false;
   hidePassword:boolean = false;
-  errorsValidation: ErrorsInterface[] = [];
+
 
   dataInput:DataInput[] = [
     {
-      name: 'username',
+      name: 'Username',
       value: 'kevin',
       type: 'text',
       validators: [Validators.required,Validators.maxLength(8) ]
     },
     {
-      name: 'email',
+      name: 'Email',
       value: 'kevin@gmail.com',
-      type: 'text',
+      type: 'email',
       validators: [Validators.required,Validators.email ]
     },
     {
-      name: 'password',
+      name: 'Password',
       value: 'kevin',
       type: 'password',
       validators: [Validators.required, ]
@@ -83,7 +77,7 @@ export class LoginComponent implements OnInit {
 
   login(){
       this.formSubmitted = true;
-      console.log(this.errorsValidation);
+      
 
   }
 

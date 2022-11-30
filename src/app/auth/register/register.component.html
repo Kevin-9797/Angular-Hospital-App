@@ -1,11 +1,68 @@
+
+
 <div class="container">
 
     <div class="login-container">
         
-            <mat-card >
-                <mat-card-content>Simple card</mat-card-content>
+        <div class="card-login">
+
+
+            <mat-card class="card">
+               
+
+                <div class="container-link">
+                   <a routerLink="/auth/login"  class="link"  routerLinkActive="active">Sign in</a>
+                   <a routerLink="/auth/register" class="link" routerLinkActive="active">Sign up</a>
+                </div>
+
+                <form [formGroup]="formRegister" (ngSubmit)="register()" class="formLogin">
+
+                    
+                    <div *ngFor="let item of dataInput; let i = index" class="container-inputs">
+
+                        <mat-form-field appearance="fill" color="accent">
+                            <mat-label class="input-label">{{ item.name }}</mat-label>
+                            <input *ngIf="item.type !== 'password'" [type]="item.type!" [formControlName]="item.name" [value]="item.value!" matInput>
+                            <input *ngIf="item.type === 'password'" [type]="hidePassword ? 'password' : 'text' " [formControlName]="item.name" [value]="item.value!" matInput>
+                            <button *ngIf="item.type === 'text'" mat-icon-button matSuffix >
+
+                                <mat-icon *ngIf="item.type === 'text'">account_circle</mat-icon>
+
+                            </button>
+
+                            <button *ngIf="item.type === 'email'" mat-icon-button matSuffix>
+                                <mat-icon *ngIf="item.type === 'email'">alternate_email</mat-icon>
+                                
+                            </button>
+                            
+                            <button *ngIf="item.type === 'password'" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                                <mat-icon>{{ hidePassword ? 'visibility_off' : 'remove_red_eye'}}</mat-icon>
+                              </button>
+                            <mat-error *ngIf="myErrorForm(item.name, 'required')"> The {{ item.name }} is required</mat-error>
+                            <mat-error *ngIf="myErrorForm(item.name, 'pattern')"> The {{ item.name }} is not a valid type</mat-error>
+                            <mat-error *ngIf="myErrorForm(item.name, 'maxlength')"> The {{ item.name }} cannot exceed 8 characters</mat-error>
+
+                        </mat-form-field>
+                        
+                        
+                    </div>
+                    <span class="container-terms">
+                        <mat-checkbox class="example-margin"
+                        [checked]="isChecked"
+                        [color]="task.color"
+                        [formControlName]="dataInputCheckbox.name"
+                        >
+                        {{task.name}}
+                         </mat-checkbox>
+                    <div class="error" *ngIf="!formRegister.get('terms')?.value"> You have not accepted the terms and conditions </div>
+                      </span>
+                      <div class="cointainer-button-submit">
+                          <button mat-raised-button type="submit" color="primary">Registrarse</button>
+                      </div>
+
+                </form>
             </mat-card>
-            <app-input></app-input>
+        </div>
 
 
     </div>

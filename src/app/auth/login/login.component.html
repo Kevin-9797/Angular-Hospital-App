@@ -20,12 +20,21 @@
                     
                     <div *ngFor="let item of dataInput; let i = index" class="container-inputs">
 
-                        <mat-form-field appearance="fill" color="'accent'">
+                        <mat-form-field appearance="fill" color="accent">
                             <mat-label class="input-label">{{ item.name }}</mat-label>
                             <input *ngIf="item.type !== 'password'" [type]="item.type!" [formControlName]="item.name" [value]="item.value!" matInput>
                             <input *ngIf="item.type === 'password'" [type]="hidePassword ? 'password' : 'text' " [formControlName]="item.name" [value]="item.value!" matInput>
+                            <button *ngIf="item.type === 'text'" mat-icon-button matSuffix >
 
-                            <button *ngIf="item.name === 'password'" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                                <mat-icon *ngIf="item.type === 'text'">account_circle</mat-icon>
+
+                            </button>
+
+                            <button *ngIf="item.type === 'email'" mat-icon-button matSuffix>
+                                <mat-icon *ngIf="item.type === 'email'">alternate_email</mat-icon>
+                                
+                            </button>
+                            <button *ngIf="item.type === 'password'" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
                                 <mat-icon>{{ hidePassword ? 'visibility_off' : 'remove_red_eye'}}</mat-icon>
                               </button>
                             <mat-error *ngIf="myErrorForm(item.name, 'required')"> The {{ item.name }} is required</mat-error>
