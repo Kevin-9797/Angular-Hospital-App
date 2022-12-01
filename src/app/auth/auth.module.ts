@@ -28,7 +28,7 @@ import { InputComponent } from '../components/input/input.component';
     ReactiveFormsModule,
     MaterialModule,
     ComponentsModule,
-    RouterModule
+    RouterModule,
     
   ]
 })

@@ -14,16 +14,16 @@
                    <a routerLink="/auth/login"  class="link"  routerLinkActive="active">Sign in</a>
                    <a routerLink="/auth/register" class="link" routerLinkActive="active">Sign up</a>
                 </div>
-
+                <span>{{ formRegister.valid }}</span>
                 <form [formGroup]="formRegister" (ngSubmit)="register()" class="formLogin">
 
                     
                     <div *ngFor="let item of dataInput; let i = index" class="container-inputs">
 
                         <mat-form-field appearance="fill" color="accent">
-                            <mat-label class="input-label">{{ item.name }}</mat-label>
-                            <input *ngIf="item.type !== 'password'" [type]="item.type!" [formControlName]="item.name" [value]="item.value!" matInput>
-                            <input *ngIf="item.type === 'password'" [type]="hidePassword ? 'password' : 'text' " [formControlName]="item.name" [value]="item.value!" matInput>
+                            <mat-label class="input-label">{{ item.label }}</mat-label>
+                            <input *ngIf="item.type !== 'password'" [type]="item.type!" [formControlName]="item.name"  matInput>
+                            <input *ngIf="item.type === 'password'" [type]="hidePassword ? 'password' : 'text' " [formControlName]="item.name"  matInput>
                             <button *ngIf="item.type === 'text'" mat-icon-button matSuffix >
 
                                 <mat-icon *ngIf="item.type === 'text'">account_circle</mat-icon>
@@ -41,6 +41,7 @@
                             <mat-error *ngIf="myErrorForm(item.name, 'required')"> The {{ item.name }} is required</mat-error>
                             <mat-error *ngIf="myErrorForm(item.name, 'pattern')"> The {{ item.name }} is not a valid type</mat-error>
                             <mat-error *ngIf="myErrorForm(item.name, 'maxlength')"> The {{ item.name }} cannot exceed 8 characters</mat-error>
+                            <mat-error *ngIf="passwordsSame( item.name,'notEqualsPass')"> The passwords are not the same</mat-error>
 
                         </mat-form-field>
                         
@@ -57,7 +58,7 @@
                     <div class="error" *ngIf="!formRegister.get('terms')?.value"> You have not accepted the terms and conditions </div>
                       </span>
                       <div class="cointainer-button-submit">
-                          <button mat-raised-button type="submit" color="primary">Registrarse</button>
+                          <button mat-raised-button type="submit" color="accent">Registrarse</button>
                       </div>
 
                 </form>

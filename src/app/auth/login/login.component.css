@@ -66,11 +66,7 @@
 
 
 .active{
-
-    border-bottom: 3px #8167a9 solid;
-
-    
-    
+    border-bottom: 3px #ff4081 solid;   
 }
 .container-link a:hover:after{
     bottom: 0;
@@ -83,7 +79,7 @@
 	width: 100%;
 	height: 2px;
 	content: '';
-	background-color: #8167a9;
+	background-color: #ff4081;
 	opacity: 0;
     transition: all 200ms linear;
 }

@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, Validation
 import { ThemePalette } from '@angular/material';
 import { Task } from 'src/app/material/interfaces/material.interface';
 import { DataInput, DataInputCheckbox } from '../interfaces/components.interface';
-import { ErrorsInterface } from '../interfaces/validations.interface';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +20,7 @@ export class LoginComponent implements OnInit {
   task: Task = {
     name: '¿Do you accept the terms and conditions?',
     completed: false,
-    color: 'primary',
+    color: 'accent',
   };
 
   formLogin:FormGroup = new FormGroup({})     
