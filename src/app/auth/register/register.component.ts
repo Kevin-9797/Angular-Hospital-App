@@ -7,7 +7,8 @@ import { UserService } from '../../services/user.service';
 import { acceptTerms } from '../../validators/auth.validators';
 import swal from 'sweetalert2'; 
 import Swal from 'sweetalert2';
-import { UserData } from '../../interfaces/user.interface';
+import {v4 as uuidv4} from 'uuid';
+import { RegisterUser } from '../../interfaces/user.interface';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -16,6 +17,8 @@ import { UserData } from '../../interfaces/user.interface';
 })
 export class RegisterComponent implements OnInit {
 
+
+ 
   public formRegister:FormGroup = new FormGroup({});
   task: Task = {
     name: '¿Do you accept the terms and conditions?',
@@ -26,28 +29,37 @@ export class RegisterComponent implements OnInit {
   isChecked:boolean = false;
   formSubmitted:boolean = false;
   hidePassword: boolean = false;
+  
   dataInput: DataInput[] = [
     {
+      id: uuidv4(),
       name:'username',
       label: 'Username',
+      value: 'kevin',
       type:'text',
       validators: [Validators.required,Validators.maxLength(8)]
     },
     {
+      id: uuidv4(),
       name: 'email',
       label: 'Email',
+      value: 'kevin@kevin.com',
       type: 'email',
       validators: [Validators.required,Validators.pattern(this.emailRegex)]
     },
     {
+      id: uuidv4(),
       name:'password',
       label: 'Password',
+      value: 'kevin',
       type:'password',
       validators: [Validators.required]
     },
     {
+      id: uuidv4(),
       name:'password2',
       label: 'Password Repeat',
+      value: 'kevin' ,
       type:'password',
       validators: [Validators.required]
     },
@@ -62,6 +74,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(  private userService:UserService   ) {
 
+   
    }
 
 
@@ -98,7 +111,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
     const { username:name,email,password } = this.formRegister.value;
-    const data:UserData = {
+    const data: RegisterUser = {
       name,
       email,
       password

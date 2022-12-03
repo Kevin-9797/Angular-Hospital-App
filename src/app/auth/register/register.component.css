@@ -85,8 +85,13 @@
 }
 
 .mat-form-field{
-    margin-top: 15px;
-
+    margin-top: 20px;
+    height: 100px;
+    background:
+    linear-gradient(
+    rgba(58, 66, 110, 0.75),
+    rgba(35,43,85,0.95));
+    border-radius: 6px;
 }
 
 .mat-form-field input{
@@ -94,6 +99,7 @@
     
 }
 .formLogin{
+    
     display: flex;
     flex-wrap: wrap;
     width: auto;
@@ -103,7 +109,7 @@
     align-items: center;
     margin-top: 10px;
     background:transparent;
-  background-size: cover;
+    background-size: cover;
 
     
 }

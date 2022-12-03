@@ -1,5 +1,6 @@
 import { ValidatorFn, Validators } from '@angular/forms';
 export interface DataInput{
+    id?: string | '';
     name: string | ''; 
     label?: string | '';
     value?: string | '';
