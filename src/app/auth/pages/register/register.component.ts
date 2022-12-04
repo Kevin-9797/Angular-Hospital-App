@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { DataInput, DataInputCheckbox } from '../interfaces/components.interface';
-import { Task } from '../../material/interfaces/material.interface';
+import { DataInput, DataInputCheckbox } from '../../interfaces/components.interface';
+import { Task } from '../../../material/interfaces/material.interface';
 import { validatePassword } from 'src/app/validators/auth.validators';
-import { UserService } from '../../services/user.service';
-import { acceptTerms } from '../../validators/auth.validators';
+import { UserService } from '../../../services/user.service';
+import { acceptTerms } from '../../../validators/auth.validators';
 import swal from 'sweetalert2'; 
 import Swal from 'sweetalert2';
 import {v4 as uuidv4} from 'uuid';
-import { RegisterUser } from '../../interfaces/user.interface';
+import { RegisterUser } from '../../../interfaces/user.interface';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',

@@ -7,11 +7,12 @@ import { AuthModule } from './auth/auth.module';
 import { ComponentsModule } from './components/components.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
-
+  
   ],
   imports: [
     BrowserModule,
@@ -21,7 +22,6 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule 
     
   ],
-  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

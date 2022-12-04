@@ -24,13 +24,13 @@
                             <mat-label class="input-label">{{ item.label }}</mat-label>
                             <input *ngIf="item.type !== 'password'" [id]="item.id!" [type]="item.type!" [formControlName]="item.name" [value]="item.value!"  matInput>
                             <input *ngIf="item.type === 'password'" [type]="hidePassword ? 'password' : 'text' " [formControlName]="item.name"  [value]="item.value!" matInput>
-                            <button *ngIf="item.type === 'text'" mat-icon-button matSuffix >
+                            <button [disabled]="true" *ngIf="item.type === 'text'" mat-icon-button matSuffix >
 
                                 <mat-icon *ngIf="item.type === 'text'">account_circle</mat-icon>
 
                             </button>
 
-                            <button *ngIf="item.type === 'email'" mat-icon-button matSuffix>
+                            <button [disabled]="true" *ngIf="item.type === 'email'" mat-icon-button matSuffix>
                                 <mat-icon *ngIf="item.type === 'email'">alternate_email</mat-icon>
                                 
                             </button>
