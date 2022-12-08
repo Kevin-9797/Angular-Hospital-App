@@ -1,0 +1,31 @@
+    
+    <mat-sidenav class="sidenav" #sidenav  mode="side"  >
+        <mat-toolbar  color="white" >
+            <span>Menú</span>
+            <span class="spacer"></span>
+            <button mat-icon-button 
+            (click)="toogleSidenav()">
+                <mat-icon>menu</mat-icon>
+            </button>
+    
+        </mat-toolbar>
+    
+        <mat-nav-list>
+            <a [routerLink]="['/views/profile']" routerLinkActive="active" (click)="sidenav.toggle()" mat-list-item>
+                <mat-icon mat-list-icon>label</mat-icon>
+                <span>Profile User</span>
+            </a>
+            <a routerLink="./agregar" (click)="sidenav.toggle()" mat-list-item>
+                <mat-icon>add</mat-icon>
+                <span>Añadir Héroe</span>
+            </a>
+            <a routerLink="./buscar" (click)="sidenav.toggle()" mat-list-item>
+                <mat-icon mat-list-icon>search</mat-icon>
+                <span>Buscar Héroe</span>
+            </a>
+            
+        </mat-nav-list>
+    </mat-sidenav>
+    
+    
+

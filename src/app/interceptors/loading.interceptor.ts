@@ -3,26 +3,26 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-
 import { LoadingService } from '../services/loading.service';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
-
-  constructor( private loading:LoadingService ) {}
+  constructor(
+    public spinnerHandler: LoadingService
+  ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    this.loading.show();
-
-    return next.handle(request)
+    this.spinnerHandler.handleRequest('plus');
+    return next
+      .handle(request)
       .pipe(
-        finalize( () => {
-          this.loading.hide();
-        })
+        finalize(this.finalize.bind(this))
       );
   }
+
+  finalize = (): void => this.spinnerHandler.handleRequest();
 }

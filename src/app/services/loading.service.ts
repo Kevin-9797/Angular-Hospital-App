@@ -7,17 +7,11 @@ import { delay } from 'rxjs/operators';
 })
 export class LoadingService {
 
-  constructor() { }
-  private _loading = new BehaviorSubject<boolean>(false);
-  public readonly loading$ = this._loading.asObservable().pipe(delay(1));
-  
-  show() {
-    this._loading.next(true);
-  }
+  public numberOfRequests: number = 0;
+  public showSpinner: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  hide() {
-    this._loading.next(false);
-  }
-
-
+  handleRequest = (state: string = 'minus'): void => {
+    this.numberOfRequests = (state === 'plus') ? this.numberOfRequests + 1 : this.numberOfRequests - 1;
+    this.showSpinner.next(this.numberOfRequests > 0);
+  };
 }

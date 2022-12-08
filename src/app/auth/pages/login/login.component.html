@@ -1,9 +1,13 @@
-<ng-container *ngIf="loading$ | async; else viewComponent">
+<!-- <ng-container *ngIf="loading; else viewComponent">
     <div class="overlay"></div>
     <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>  
-  </ng-container>
-
-<ng-template #viewComponent>
+  </ng-container> -->
+  <div *ngIf="spinnerActive" class="loading-container flex-content-center">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
     <div class="container">
     
         <div class="login-container">
@@ -28,17 +32,17 @@
                                 <mat-label class="input-label">{{ item.label }}</mat-label>
                                 <input *ngIf="item.type !== 'password'" [type]="item.type!" [formControlName]="item.name" [value]="item.value!" matInput>
                                 <input *ngIf="item.type === 'password'" [type]="hidePassword ? 'password' : 'text' " [formControlName]="item.name" [value]="item.value!" matInput>
-                                <button [disabled]="true" *ngIf="item.type === 'text'" mat-icon-button matSuffix >
+                                <button [disabled]="true" *ngIf="item.type === 'text'" type="button" mat-icon-button matSuffix >
     
                                     <mat-icon *ngIf="item.type === 'text'">account_circle</mat-icon>
     
                                 </button>
     
-                                <button [disabled]="true" *ngIf="item.type === 'email'" mat-icon-button matSuffix>
+                                <button [disabled]="true" *ngIf="item.type === 'email'" type="button" mat-icon-button matSuffix>
                                     <mat-icon *ngIf="item.type === 'email'">alternate_email</mat-icon>
                                     
                                 </button>
-                                <button *ngIf="item.type === 'password'" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                                <button *ngIf="item.type === 'password'" type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
                                     <mat-icon>{{ hidePassword ? 'visibility_off' : 'remove_red_eye'}}</mat-icon>
                                   </button>
                                 <mat-error *ngIf="myErrorForm(item.name, 'required')"> The {{ item.name }} is required</mat-error>
@@ -68,5 +72,4 @@
     </div>
 
 
-</ng-template>
 

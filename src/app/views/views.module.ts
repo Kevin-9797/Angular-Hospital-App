@@ -4,11 +4,18 @@ import { CommonModule } from '@angular/common';
 import { ViewsRoutingModule } from './views-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MaterialModule } from '../material/material.module';
+import { DrawerComponent } from './drawer/drawer.component';
+import { ViewsService } from '../services/views.service';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    DrawerComponent,
+    ProfileComponent
   ],
   exports: [
     DashboardComponent
@@ -16,7 +23,13 @@ import { MaterialModule } from '../material/material.module';
   imports: [
     CommonModule,
     ViewsRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule
+  ],
+  providers:[
+    ViewsService,
   ]
 })
 export class ViewsModule { }

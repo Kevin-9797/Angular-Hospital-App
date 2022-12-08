@@ -1,21 +1,26 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { RegisterUser, LoginUser, Token } from '../interfaces/user.interface';
+import { Injectable, NgZone } from '@angular/core';
+import { RegisterUser, LoginUser, Token, UpdataUser } from '../interfaces/user.interface';
 import { environment } from '../../environments/environment';
 import { map, tap, Observable, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
+declare const google:any;
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  public google:any;
-
-
+  private zone!: NgZone;
+  public user!:User;
   baseUrl: string = environment.baseUrl;
   constructor( private http:HttpClient,private router:Router ) { 
     this.googleInit();
+  }
+
+  get token():string{
+    return localStorage.getItem('token') || '';
   }
 
   createUser( userData: RegisterUser ){
@@ -26,7 +31,7 @@ export class UserService {
   googleInit(){
     return new Promise<void>( resolve => {
 
-      this.google.accounts.id.initialize({
+      google.accounts.id.initialize({
         client_id: "119448347446-pu5svvp9q1e0c66d6adi00ts7jrugu6f.apps.googleusercontent.com",
         cookiePolicy: 'single_host_origin'
         //OJO DATO IMPORTANTE!! si queremos que this apunte al componente y no al objeto de google
@@ -40,12 +45,18 @@ export class UserService {
 
   }
 
-  logout(){
-    localStorage.removeItem('token');
-    this.google.signOut().then( () => {
-      this.router.navigateByUrl('auth/login');
-      
+
+  updateProfile( data:UpdataUser ){
+    data = {
+      ...data,
+      role: this.user.role || ''
+    }
+    return this.http.put(`${this.baseUrl}/auth/google/${ this.user.uid }`,data,{
+      headers: {
+        'x-token': this.token,
+      }
     })
+
 
 
   }
@@ -72,14 +83,21 @@ export class UserService {
   }
 
   tokenValidate():Observable<Boolean>{
-    const token = localStorage.getItem('token') || '';
     return this.http.get(`${this.baseUrl}/auth/renew`,{
       headers: {
-        'x-token': token,
+        'x-token': this.token,
       }
     }).pipe(
-      tap( ( resp:any ) => {
-        console.log(resp.token)
+      map( ( resp:any ) => {
+        const {
+          email,
+          isGoogle,
+          name,
+          role,
+          img
+        } = resp.user;
+        this.user = new User( name,email,'',role,isGoogle,img,resp.uid );
+        console.log(this.user)
         localStorage.setItem('token',resp.token)
       }),
       map( resp => true ),

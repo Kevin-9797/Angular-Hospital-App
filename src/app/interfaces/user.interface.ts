@@ -10,6 +10,14 @@ export interface RegisterUser extends LoginUser {
     img?: string;
 }
 
+
+export interface UpdataUser  {
+    name?: string;
+    email?: string;
+    img?: string;
+    role: string;
+}
+
 export interface Token {
     token:string;
 }

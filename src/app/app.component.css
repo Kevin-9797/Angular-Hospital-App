@@ -1,0 +1,14 @@
+.mat-form-field{
+    margin-top: 20px;
+    height: 100px;
+    background:
+    linear-gradient(
+    rgba(58, 66, 110, 0.75),
+    rgba(35,43,85,0.95));
+    border-radius: 6px;
+}
+
+.mat-form-field input{
+    color: white;
+    
+}

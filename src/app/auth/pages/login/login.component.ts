@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild,ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, ValidationErrors, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material';
 import { Task } from 'src/app/material/interfaces/material.interface';
@@ -10,6 +10,7 @@ import {v4 as uuidv4} from 'uuid';
 import { tap, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoadingService } from '../../../services/loading.service';
+import { delay } from 'rxjs/operators';
 declare const google: any;
 @Component({
   selector: 'app-login',
@@ -20,19 +21,14 @@ declare const google: any;
 
 export class LoginComponent implements OnInit ,AfterViewInit{
 
-  @ViewChild('googleBtn') googleBtn!: ElementRef;
+  spinnerActive: boolean = true;
 
-  constructor( private fb:NonNullableFormBuilder, private userService:UserService, private router:Router ,private loader:LoadingService ) { }
   task: Task = {
     name: '¿Do you accept the terms and conditions?',
     completed: false,
     color: 'accent',
   };
-  
   formLogin: FormGroup = new FormGroup({})     
-
-  loading$: Observable<boolean> = this.loader.loading$;
-  isChecked:boolean = false;
   formSubmitted:boolean = false;
   hidePassword:boolean = false;
   isSpinner:boolean = false;
@@ -54,6 +50,21 @@ export class LoginComponent implements OnInit ,AfterViewInit{
       validators: [ Validators.required, ]
     }
   ]
+
+
+  @ViewChild('googleBtn') googleBtn!: ElementRef;
+
+  constructor( private fb:NonNullableFormBuilder,
+               private userService:UserService,
+               private router:Router,
+               private spinnerHandler:LoadingService,
+               private _loading: LoadingService,
+               private cdr: ChangeDetectorRef,
+               
+    ) {
+      this.spinnerHandler.showSpinner.subscribe(this.showSpinner.bind(this));
+     }
+  
   
   ngOnInit(): void {
     
@@ -65,15 +76,18 @@ export class LoginComponent implements OnInit ,AfterViewInit{
     
   }
   
+
     ngAfterViewInit(): void {
       this.googleInit();
     }
+    showSpinner = (state: boolean): void => {
+      this.spinnerActive = state;
+    };
   
-
   googleInit(){
       google.accounts.id.initialize({
         client_id: "119448347446-pu5svvp9q1e0c66d6adi00ts7jrugu6f.apps.googleusercontent.com",
-        callback: ( response:any ) => this.loginGoogle(response) 
+        callback: ( response:any ) =>  this.loginGoogle(response)  
         //OJO DATO IMPORTANTE!! si queremos que this apunte al componente y no al objeto de google
         // tenemos que pasarle la response como parametro de callback para no perder la referencia 
       });
@@ -98,16 +112,12 @@ export class LoginComponent implements OnInit ,AfterViewInit{
     }
 
     this.isSpinner = true;
-    console.log(this.loading$)
     this.userService.loginGoogle( data ) 
                     .subscribe({
                       next: (resp: any) =>{
                         console.log(resp)
-                        setTimeout(() => {
-                          this.isSpinner = false ;
-                          this.router.navigateByUrl('views/dashboard')
-
-                      }, 3000);
+                        this.router.navigate(['/views']);
+                        
                       
                       },
                       error: err => {
@@ -120,6 +130,8 @@ export class LoginComponent implements OnInit ,AfterViewInit{
 
 
   }
+
+
 
   myErrorForm(controlName: string, errorName: string){
        return this.formLogin.controls[controlName].hasError(errorName);
@@ -144,7 +156,7 @@ export class LoginComponent implements OnInit ,AfterViewInit{
                         next: resp => {
                           console.log(resp);
 
-                          this.router.navigateByUrl('/');
+                          this.router.navigate(['/views']);
                         },
                         error: err => {
 

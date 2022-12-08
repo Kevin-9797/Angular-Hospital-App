@@ -1,0 +1,71 @@
+
+<div class="container-profile">
+
+    
+    <mat-card class="card-container" >
+        <mat-card-header>
+            <mat-card-title>Title</mat-card-title>
+            <mat-card-subtitle>Subtitle</mat-card-subtitle>
+        </mat-card-header>
+        <button *ngIf="user.img !== undefined; else viewImage " mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+            <img matCardImage class="user-img" [src]="user.img">
+          </button>
+          <ng-template #viewImage>
+              <img class="user-img" [src]="imagePath" alt="">
+          </ng-template>
+        <mat-card-content>
+            Text content
+        </mat-card-content>
+        <mat-card-actions align="start">
+            <form [formGroup]="formProfile" (ngSubmit)="updateProfile()" class="formLogin">
+    
+                        
+                <div *ngFor="let item of dataInput; let i = index" class="container-inputs">
+
+                    <mat-form-field appearance="fill" color="accent">
+                        <mat-label class="input-label">{{ item.label }}</mat-label>
+                        <input *ngIf="item.type !== 'password'" [type]="item.type!" [formControlName]="item.name" [value]="item.value!" matInput>
+                        <input *ngIf="item.type === 'password'" [type]="hidePassword ? 'password' : 'text' " [formControlName]="item.name" [value]="item.value!" matInput>
+                        <button [disabled]="true" *ngIf="item.type === 'text'" mat-icon-button matSuffix >
+
+                            <mat-icon *ngIf="item.type === 'text'">account_circle</mat-icon>
+
+                        </button>
+
+                        <button [disabled]="true" *ngIf="item.type === 'email'" mat-icon-button matSuffix>
+                            <mat-icon *ngIf="item.type === 'email'">alternate_email</mat-icon>
+                            
+                        </button>
+                        <button *ngIf="item.type === 'password'" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                            <mat-icon>{{ hidePassword ? 'visibility_off' : 'remove_red_eye'}}</mat-icon>
+                          </button>
+                        <mat-error *ngIf="myErrorForm(item.name, 'required')"> The {{ item.name }} is required</mat-error>
+                        <mat-error *ngIf="myErrorForm(item.name, 'email')"> The {{ item.name }} is not a valid type</mat-error>
+                        <mat-error *ngIf="myErrorForm(item.name, 'maxlength')"> The {{ item.name }} cannot exceed 8 characters</mat-error>
+
+                    </mat-form-field>
+                    
+                    
+                </div>
+                <div class="container-terms">
+                    
+                </div>
+                <button *ngIf="!user.isGoogle" [disabled]="true" class="upload-button"   mat-icon-button matSuffix>
+                    <span>Change Img Profile</span>
+                    <mat-icon >add_photo_alternate</mat-icon>
+                    
+                </button>
+
+                  <div class="cointainer-button-submit">
+                      <button [disabled]="formProfile.invalid" mat-raised-button type="submit" color="accent">Accept</button>
+                  </div>
+
+            </form>
+            
+        </mat-card-actions>
+        <mat-card-footer>
+        </mat-card-footer>
+    </mat-card>
+
+
+</div>

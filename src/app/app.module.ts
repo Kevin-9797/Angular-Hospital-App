@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { MaterialModule } from './material/material.module';
+import { ViewsService } from './services/views.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,8 +21,11 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
     AppRoutingModule,
     BrowserAnimationsModule,
     RouterModule,
-    HttpClientModule 
+    HttpClientModule,
     
+  ],
+  providers:[
+    ViewsService
   ],
   bootstrap: [AppComponent]
 })

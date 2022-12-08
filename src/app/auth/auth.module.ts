@@ -32,11 +32,6 @@ import { LoadingInterceptor } from '../interceptors/loading.interceptor';
     ComponentsModule,
     RouterModule,
     
-  ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoadingInterceptor,
-    multi: true
-  }],
+  ]
 })
 export class AuthModule { }

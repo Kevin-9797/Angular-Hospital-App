@@ -104,7 +104,6 @@ mat-progress-spinner{
     transition: all 200ms linear;
 }
 
-
 .mat-form-field{
     margin-top: 20px;
     height: 100px;
@@ -119,6 +118,7 @@ mat-progress-spinner{
     color: white;
     
 }
+
 .formLogin{
     
     display: flex;

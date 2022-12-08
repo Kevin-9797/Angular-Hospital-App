@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<!-- <mat-toolbar color="primary">
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
     </button>
@@ -10,8 +10,45 @@
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>share</mat-icon>
     </button>
+
     <button (click)="logout()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>exit_to_app</mat-icon>
-
+      
     </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <img class="img-profile" [src]="imgUrl" alt="">
+    </button>
+  </mat-toolbar> -->
+
+
+  <mat-sidenav-container fullScreen class="sidenav-dashboard">
+    
+    <app-drawer></app-drawer>
+    
+  <mat-toolbar color="primary">
+      <button mat-icon-button 
+      (click)="toogleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <span>{{ user.name }}</span>
+    <button mat-button (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+     <button *ngIf="user.img !== undefined; else viewImage " mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <img class="img-profile" [src]="imgUrl" alt="">
+    </button>
+    <ng-template #viewImage>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <img class="img-profile" [src]="imagePath" alt="">
+      </button>
+
+    </ng-template>
+    
   </mat-toolbar>
+  
+  <router-outlet></router-outlet>
+
+  
+  
+</mat-sidenav-container>
