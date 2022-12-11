@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit ,AfterViewInit{
                private spinnerHandler:LoadingService,
                private _loading: LoadingService,
                private cdr: ChangeDetectorRef,
+               private ngZone: NgZone
                
     ) {
       this.spinnerHandler.showSpinner.subscribe(this.showSpinner.bind(this));
@@ -116,7 +117,8 @@ export class LoginComponent implements OnInit ,AfterViewInit{
                     .subscribe({
                       next: (resp: any) =>{
                         console.log(resp)
-                        this.router.navigate(['/views']);
+                        this.ngZone.run(() => this.router.navigate(['/views']) )
+                        
                         
                       
                       },

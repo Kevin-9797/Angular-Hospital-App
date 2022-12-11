@@ -8,7 +8,6 @@ import { ComponentsModule } from './components/components.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { MaterialModule } from './material/material.module';
 import { ViewsService } from './services/views.service';
 @NgModule({

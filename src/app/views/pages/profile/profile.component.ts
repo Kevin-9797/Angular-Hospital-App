@@ -4,6 +4,7 @@ import { User } from '../../../models/user.model';
 import { DataInput } from '../../../auth/interfaces/components.interface';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { FileUploadService } from '../../../services/file-upload.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,35 +12,39 @@ import Swal from 'sweetalert2';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user!:User;
+  public user:User = new User('','');
+  public file!:File;
   hidePassword:boolean = false;
   formProfile: FormGroup = new FormGroup({})     
   imagePath: string = 'assets/images/avatar_image.jpg';
 
-  constructor( private userService:UserService ) {
-      this.user = this.userService.user;
-   }
+  constructor( private userService:UserService ,private fileUpload:FileUploadService ) {
 
-   dataInput:DataInput[] = [
-    {
 
-      name: 'email',
-      label: 'Email',
-      value: this.user.email || '',
-      type: 'email',
-      validators: [ Validators.required,Validators.email ]
-    },
-    {
-      name: 'text',
-      label:'Name',
-      value: this.user.name || '',
-      type: 'text',
-      validators: [ Validators.required, ]
-    }
-  ]
+              }
+
+   dataInput!:DataInput[]
   
 
   ngOnInit(): void {
+    this.user = this.userService.user;
+    this.dataInput =  [
+      {
+  
+        name: 'email',
+        label: 'Email',
+        value: this.user.email ,
+        type: 'email',
+        validators: [ Validators.required,Validators.email ]
+      },
+      {
+        name: 'name',
+        label:'Name',
+        value: this.user.name ,
+        type: 'text',
+        validators: [ Validators.required, ]
+      }
+    ]
     this.dataInput.forEach( e => {
 
       this.formProfile.addControl(e.name,new FormControl(e.value,e.validators))
@@ -61,6 +66,38 @@ export class ProfileComponent implements OnInit {
                 Swal.fire('Error',err.msg,'error')
               }
             })
+  }
+
+
+  changeImg( event:any ){
+    this.file = event.target.files[0];
+  }
+
+  uploadImg(){  
+    console.log('upload img')
+
+    if(this.file){
+
+      this.fileUpload.updateImg(this.file,'users',this.user.uid!)
+              .subscribe({
+                next: resp => {
+                  console.log(resp)
+                },
+                error: err => {
+                  console.log(err)
+                  Swal.fire('Error',err.msg,'error')
+  
+                }
+              })
+
+
+    }else{
+
+      Swal.fire('Error','File not exist','error')
+
+
+    }
+
   }
 
 }

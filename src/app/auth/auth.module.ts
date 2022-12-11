@@ -10,7 +10,6 @@ import { MaterialModule } from '../material/material.module';
 import { ComponentsModule } from '../components/components.module';
 import { InputComponent } from '../components/input/input.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoadingInterceptor } from '../interceptors/loading.interceptor';
 
 
 @NgModule({

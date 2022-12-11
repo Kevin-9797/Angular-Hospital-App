@@ -1,18 +1,29 @@
 
 <div class="container-profile">
-
     
+    <mat-card class="card-image">
+        <mat-card-content class="card-image-container">
+            <img *ngIf="user.img !== undefined; else viewImage " matCardImage class="user-img" [src]="user.img">
+            <ng-template #viewImage>
+                <img class="user-img" [src]="imagePath" alt="">
+            </ng-template>
+            <span>Change Img Profile</span>
+            
+            <input #file class="input-file-img" type="file" (change)="changeImg($event)" value="">
+            <button *ngIf="!user.isGoogle" (click)="file.click()"  class="upload-button"   mat-icon-button matSuffix>
+                <mat-icon >add_photo_alternate</mat-icon>
+                
+            </button>
+            <div class="cointainer-button-submit">
+                <button  mat-raised-button type="button" (click)="uploadImg()" color="accent">Accept</button>
+            </div>
+      </mat-card-content>
+    </mat-card>
     <mat-card class="card-container" >
         <mat-card-header>
             <mat-card-title>Title</mat-card-title>
             <mat-card-subtitle>Subtitle</mat-card-subtitle>
         </mat-card-header>
-        <button *ngIf="user.img !== undefined; else viewImage " mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-            <img matCardImage class="user-img" [src]="user.img">
-          </button>
-          <ng-template #viewImage>
-              <img class="user-img" [src]="imagePath" alt="">
-          </ng-template>
         <mat-card-content>
             Text content
         </mat-card-content>
@@ -50,11 +61,6 @@
                 <div class="container-terms">
                     
                 </div>
-                <button *ngIf="!user.isGoogle" [disabled]="true" class="upload-button"   mat-icon-button matSuffix>
-                    <span>Change Img Profile</span>
-                    <mat-icon >add_photo_alternate</mat-icon>
-                    
-                </button>
 
                   <div class="cointainer-button-submit">
                       <button [disabled]="formProfile.invalid" mat-raised-button type="submit" color="accent">Accept</button>

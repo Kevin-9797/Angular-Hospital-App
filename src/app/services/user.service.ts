@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, OnInit } from '@angular/core';
 import { RegisterUser, LoginUser, Token, UpdataUser } from '../interfaces/user.interface';
 import { environment } from '../../environments/environment';
-import { map, tap, Observable, catchError, of } from 'rxjs';
+import { map, tap, Observable, catchError, of, switchMap, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 declare const google:any;
@@ -11,18 +11,31 @@ declare const google:any;
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnInit{
   private zone!: NgZone;
   public user!:User;
+  private userDataSubject!: BehaviorSubject<User>;
+  public userData!: Observable<User>;
   baseUrl: string = environment.baseUrl;
   constructor( private http:HttpClient,private router:Router ) { 
     this.googleInit();
+    this.userDataSubject = new BehaviorSubject<User>({ name: '', email:'',imgUrl:''});
+    this.userData = this.userDataSubject.asObservable(); 
   }
-
+  
+  ngOnInit(): void {
+   
+    
+  }
   get token():string{
     return localStorage.getItem('token') || '';
   }
 
+  set setUser( user:User ){
+    this.user = user;
+  }
+
+   
   createUser( userData: RegisterUser ){
     
     return this.http.post(this.baseUrl + '/users', userData )
@@ -47,12 +60,13 @@ export class UserService {
 
 
   updateProfile( data:UpdataUser ){
+    console.log(data)
     data = {
       ...data,
       role: this.user.role || ''
     }
-    return this.http.put(`${this.baseUrl}/auth/google/${ this.user.uid }`,data,{
-      headers: {
+    return this.http.put(`${this.baseUrl}/users/${ this.user.uid }`,data,{
+      headers: {  
         'x-token': this.token,
       }
     })
@@ -89,6 +103,7 @@ export class UserService {
       }
     }).pipe(
       map( ( resp:any ) => {
+        localStorage.setItem('token',resp.token)
         const {
           email,
           isGoogle,
@@ -97,8 +112,9 @@ export class UserService {
           img
         } = resp.user;
         this.user = new User( name,email,'',role,isGoogle,img,resp.uid );
+        this.userDataSubject.next(this.user);
         console.log(this.user)
-        localStorage.setItem('token',resp.token)
+
       }),
       map( resp => true ),
       catchError( error => of(false) )
