@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone, OnInit } from '@angular/core';
-import { RegisterUser, LoginUser, Token, UpdataUser } from '../interfaces/user.interface';
+import { RegisterUser, LoginUser, Token, UpdataUser, LoadUsers } from '../interfaces/user.interface';
 import { environment } from '../../environments/environment';
 import { map, tap, Observable, catchError, of, switchMap, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
-declare const google:any;
 
 
 @Injectable({
@@ -18,7 +17,6 @@ export class UserService implements OnInit{
   public userData!: Observable<User>;
   baseUrl: string = environment.baseUrl;
   constructor( private http:HttpClient,private router:Router ) { 
-    this.googleInit();
     this.userDataSubject = new BehaviorSubject<User>({ name: '', email:'',imgUrl:''});
     this.userData = this.userDataSubject.asObservable(); 
   }
@@ -26,6 +24,14 @@ export class UserService implements OnInit{
   ngOnInit(): void {
    
     
+  }
+
+  get headers(){
+    return {
+      headers: {  
+      'x-token': this.token,
+      }
+  }
   }
   get token():string{
     return localStorage.getItem('token') || '';
@@ -41,22 +47,7 @@ export class UserService implements OnInit{
     return this.http.post(this.baseUrl + '/users', userData )
 
   }
-  googleInit(){
-    return new Promise<void>( resolve => {
 
-      google.accounts.id.initialize({
-        client_id: "119448347446-pu5svvp9q1e0c66d6adi00ts7jrugu6f.apps.googleusercontent.com",
-        cookiePolicy: 'single_host_origin'
-        //OJO DATO IMPORTANTE!! si queremos que this apunte al componente y no al objeto de google
-        // tenemos que pasarle la response como parametro de callback para no perder la referencia 
-      });
-
-      resolve();
-      
-    });
-
-
-  }
 
 
   updateProfile( data:UpdataUser ){
@@ -65,11 +56,7 @@ export class UserService implements OnInit{
       ...data,
       role: this.user.role || ''
     }
-    return this.http.put(`${this.baseUrl}/users/${ this.user.uid }`,data,{
-      headers: {  
-        'x-token': this.token,
-      }
-    })
+    return this.http.put(`${this.baseUrl}/users/${ this.user.uid }`,data, this.headers)
 
 
 
@@ -96,12 +83,15 @@ export class UserService implements OnInit{
     );
   }
 
+  loadUsers( start: number ){
+    
+    return this.http.get< LoadUsers >(`${ this.baseUrl }/users?start=${ start }`, this.headers )
+
+
+  }
+
   tokenValidate():Observable<Boolean>{
-    return this.http.get(`${this.baseUrl}/auth/renew`,{
-      headers: {
-        'x-token': this.token,
-      }
-    }).pipe(
+    return this.http.get(`${this.baseUrl}/auth/renew`,this.headers ).pipe(
       map( ( resp:any ) => {
         localStorage.setItem('token',resp.token)
         const {
@@ -109,9 +99,10 @@ export class UserService implements OnInit{
           isGoogle,
           name,
           role,
-          img
+          img,
+          isDeleted
         } = resp.user;
-        this.user = new User( name,email,'',role,isGoogle,img,resp.uid );
+        this.user = new User( name,email,'',role,isGoogle,img,resp.uid,isDeleted );
         this.userDataSubject.next(this.user);
         console.log(this.user)
 

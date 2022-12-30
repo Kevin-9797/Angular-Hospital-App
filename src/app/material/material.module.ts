@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button'; 
-import {MatFormFieldModule, MatInputModule } from '@angular/material'; 
+import {MatFormFieldModule, MatInputModule  } from '@angular/material'; 
+import {MatTableModule} from '@angular/material/table'; 
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import {MatIconModule} from '@angular/material/icon'; 
 import {MatToolbarModule} from '@angular/material/toolbar'; 
@@ -33,7 +34,8 @@ import {
     MatSnackBarModule,
     MatDialogModule,
     MatAutocompleteModule,
-    MatListModule
+    MatListModule,
+    MatTableModule
     ]
 })
 export class MaterialModule { }

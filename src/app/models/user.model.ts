@@ -12,6 +12,8 @@ export class User {
         public isGoogle?: boolean,
         public img?: string,
         public uid?: string,
+        public isDeleted?: boolean,
+
     ){}
 
     get imgUrl () {

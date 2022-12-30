@@ -9,13 +9,15 @@ import { ViewsService } from '../services/views.service';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { UsersComponent } from './pages/maintance/users/users.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
     DrawerComponent,
-    ProfileComponent
+    ProfileComponent,
+    UsersComponent
   ],
   exports: [
     DashboardComponent

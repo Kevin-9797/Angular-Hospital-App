@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { UsersComponent } from './pages/maintance/users/users.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent
+      },
+      {
+        path: 'users',
+        component: UsersComponent
       },
       {
         path:'**',

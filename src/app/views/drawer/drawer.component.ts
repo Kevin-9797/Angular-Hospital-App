@@ -2,6 +2,8 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { ViewsService } from '../../services/views.service';
 import { Router } from '@angular/router';
+import { MenuItemService } from '../../services/menu-item.service';
+import { MenuItem } from '../../interfaces/components.interface';
 
 @Component({
   selector: 'app-drawer',
@@ -22,15 +24,21 @@ import { Router } from '@angular/router';
 export class DrawerComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  constructor(private viewService: ViewsService, private router:Router ) 
+  menuItem: MenuItem [] = []; 
+  constructor(
+                      private viewService: ViewsService,
+                      private router:Router, 
+                      private menuItemService:MenuItemService 
+            ) 
   {
 
   }
 
   ngOnInit() {
-      /**
-      When you reveive order to open / close sidenav.
-      **/
+
+    
+      this.menuItem = this.menuItemService.menu;
+      this.menuItem;
       this.viewService.asObservable().subscribe((isOpen: boolean) => {
                   console.log( isOpen )
                   if(isOpen) {
@@ -43,6 +51,12 @@ export class DrawerComponent implements OnInit {
           
   }
 
+  onClose(){
+    this.viewService.toggle();
+    this.sidenav.toggle()
+
+
+  }
   toogleSidenav(){
     this.viewService.toggle();
   }
