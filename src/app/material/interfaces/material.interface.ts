@@ -1,8 +1,7 @@
-import { ThemePalette } from "@angular/material";
 
 export interface Task {
     name: string;
     completed: boolean;
-    color: ThemePalette;
+    color?: string;
     subtasks?: Task[];
   }

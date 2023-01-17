@@ -21,7 +21,6 @@ import { ViewsService } from './services/views.service';
     BrowserAnimationsModule,
     RouterModule,
     HttpClientModule,
-    
   ],
   providers:[
     ViewsService

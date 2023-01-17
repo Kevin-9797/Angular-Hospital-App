@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav } from '@angular/material/sidenav';
 import { ViewsService } from '../../services/views.service';
 import { Router } from '@angular/router';
 import { MenuItemService } from '../../services/menu-item.service';

@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild,ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, ValidationErrors, Validators } from '@angular/forms';
-import { ThemePalette } from '@angular/material';
 import { Task } from 'src/app/material/interfaces/material.interface';
 import { DataInput, DataInputCheckbox } from '../../interfaces/components.interface';
 import { UserService } from '../../../services/user.service';
@@ -21,7 +20,6 @@ declare const google: any;
 
 export class LoginComponent implements OnInit ,AfterViewInit{
 
-  spinnerActive: boolean = true;
 
   task: Task = {
     name: '¿Do you accept the terms and conditions?',
@@ -63,7 +61,6 @@ export class LoginComponent implements OnInit ,AfterViewInit{
                private ngZone: NgZone
                
     ) {
-      this.spinnerHandler.showSpinner.subscribe(this.showSpinner.bind(this));
      }
   
   
@@ -81,9 +78,7 @@ export class LoginComponent implements OnInit ,AfterViewInit{
     ngAfterViewInit(): void {
       this.googleInit();
     }
-    showSpinner = (state: boolean): void => {
-      this.spinnerActive = state;
-    };
+
   
   googleInit(){
       google.accounts.id.initialize({
@@ -116,11 +111,9 @@ export class LoginComponent implements OnInit ,AfterViewInit{
     this.userService.loginGoogle( data ) 
                     .subscribe({
                       next: (resp: any) =>{
-                        console.log(resp)
-                        this.ngZone.run(() => this.router.navigate(['/views']) )
+                        console.log(resp);
+                        this.ngZone.run( () => this.router.navigate(['/views']) )
                         
-                        
-                      
                       },
                       error: err => {
                         Swal.fire('Error',err.error.msg,'error');
@@ -135,7 +128,7 @@ export class LoginComponent implements OnInit ,AfterViewInit{
 
 
 
-  myErrorForm(controlName: string, errorName: string){
+  myErrorForm( controlName: string, errorName: string ){
        return this.formLogin.controls[controlName].hasError(errorName);
 
     }
@@ -150,19 +143,16 @@ export class LoginComponent implements OnInit ,AfterViewInit{
           email,
           password
       }
-      console.log(data)
       this.userService.loginUser(data)
                       .pipe(
                       )
                       .subscribe({
                         next: resp => {
-                          console.log(resp);
 
                           this.router.navigate(['/views']);
                         },
                         error: err => {
 
-                          console.log(err);
                           Swal.fire('Error',err.error.msg,'error');
 
                         }

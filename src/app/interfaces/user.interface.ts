@@ -12,7 +12,7 @@ export interface RegisterUser extends LoginUser {
 }
 
 export interface LoadUsers {
-    total:number;
+    total: number;
     users: User[] 
 }
 

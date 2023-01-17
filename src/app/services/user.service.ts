@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone, OnInit } from '@angular/core';
 import { RegisterUser, LoginUser, Token, UpdataUser, LoadUsers } from '../interfaces/user.interface';
 import { environment } from '../../environments/environment';
-import { map, tap, Observable, catchError, of, switchMap, BehaviorSubject } from 'rxjs';
+import { map, tap, Observable, catchError, of, switchMap, BehaviorSubject, delay } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 
@@ -84,13 +84,34 @@ export class UserService implements OnInit{
   }
 
   loadUsers( start: number ){
-    
-    return this.http.get< LoadUsers >(`${ this.baseUrl }/users?start=${ start }`, this.headers )
+    const url: string = `${ this.baseUrl }/users?start=${ start }`;
+    return this.http.get< LoadUsers >( url , this.headers )
+            .pipe(
+              map( resp => {
+                const users = resp.users.map( 
+                    
+                    user => new User(user.name,user.email,'',user.role,user.isGoogle,user.img,user.uid,user.isDeleted)
+                  
+                  )
+                return {
+                  total: resp.total,
+                  users
+                };
+              })
+            )
 
 
   }
 
-  tokenValidate():Observable<Boolean>{
+  deleteUser( user:User ){
+    
+    const url: string = `${ this.baseUrl }/users/${ user.uid }`;
+
+    return this.http.delete( url, this.headers );
+
+  }
+
+  tokenValidate(): Observable<Boolean>{
     return this.http.get(`${this.baseUrl}/auth/renew`,this.headers ).pipe(
       map( ( resp:any ) => {
         localStorage.setItem('token',resp.token)
