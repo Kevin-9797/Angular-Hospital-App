@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from './material/material.module';
 import { ViewsService } from './services/views.service';
+
 @NgModule({
   declarations: [
     AppComponent,

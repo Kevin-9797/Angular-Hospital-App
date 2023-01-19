@@ -6,11 +6,47 @@
     <div class="modal-line-style">
 
     </div>
-      <h1 class="title">{{ title }}</h1>
+    <div *ngIf="!user.isGoogle; else showGoogle">
+      <h1  class="title">{{ title }}</h1>
       <p class="body">{{ body }}</p>
-      <div class="btn-container">
-        <button (click)="closeMe()">Close</button>
-        <button (click)="confirm()">Confirm</button>
-      </div>
+      
+      
+      <div class="container-upload-img" *ngIf="activateUpload; else showButtons">
+        <div class="container-user-img">
+          <img class="user-img" *ngIf="imgTemp" [src]="imgTemp" alt="">
+  
+        </div>
+        <input #file class="input-file-img" type="file" (change)=" changeFile ($event) " value="">
+        <div class="upload-container">
+          <button  (click)="file.click()"  class="upload-button"   mat-icon-button matSuffix>
+              <mat-icon >add_photo_alternate</mat-icon>
+              
+          </button>
+  
+        </div>
     </div>
-  </div>
+    </div>
+      <ng-template #showGoogle>
+
+        <h1 class="title">User registered with google cannot modify their profile photo, sorry</h1>
+        <button mat-raised-button (click)="closeMe()">Close</button>
+
+      </ng-template>
+        <div class="cointainer-button-submit" *ngIf="!user.isGoogle">
+
+          <button  mat-raised-button type="button" (click)="uploadFile()" color="primary">Accept</button>
+          <button mat-raised-button (click)="closeMe()">Close</button>
+
+        </div>
+      </div>
+      <ng-template #showButtons>
+
+        <div  class="btn-container">
+          <button  mat-raised-button color="primary" (click)="confirm()">Confirm</button>
+          <button  mat-raised-button (click)="closeMe()">Close</button>
+        </div>
+
+
+      </ng-template>
+      
+    </div>

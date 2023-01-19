@@ -27,7 +27,7 @@ export class FileUploadService {
     
     return this.http.post(url, formData, { reportProgress: true, headers: { 'x-token': this.userService.token } })
       .pipe(
-        map( ( resp:any ) => resp.user )
+        map( ( resp:any ) => resp )
       );
 
   }

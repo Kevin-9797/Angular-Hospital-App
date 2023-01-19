@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UsersComponent } from './pages/maintance/users/users.component';
+import { HospitalsComponent } from './pages/maintance/hospitals/hospitals.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent
+      },
+      {
+        path: 'hospitals',
+        component: HospitalsComponent
       },
       {
         path:'**',

@@ -10,12 +10,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UsersComponent } from './pages/maintance/users/users.component';
 import { ComponentsModule } from '../components/components.module';
+import { MatSelectModule } from '@angular/material/select';
+import { HospitalsComponent } from './pages/maintance/hospitals/hospitals.component';
+
 @NgModule({
   declarations: [
     DashboardComponent,
     DrawerComponent,
     ProfileComponent,
-    UsersComponent
+    UsersComponent,
+    HospitalsComponent
   ],
   exports: [
     DashboardComponent,
@@ -31,6 +35,7 @@ import { ComponentsModule } from '../components/components.module';
     FormsModule,
     RouterModule,
     ComponentsModule,
+    MatSelectModule
   ]
   
 })

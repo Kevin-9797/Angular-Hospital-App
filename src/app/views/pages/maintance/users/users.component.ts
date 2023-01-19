@@ -6,7 +6,7 @@ import { UserService } from '../../../../services/user.service';
 import { User } from '../../../../models/user.model';
 import { SearchsService } from '../../../../services/searchs.service';
 import { fromEvent, Subscription } from 'rxjs';
-import { map, debounceTime } from 'rxjs/operators';
+import { map, debounceTime, delay } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { ModalService } from '../../../../services/modal.service';
@@ -27,14 +27,10 @@ export class UsersComponent implements OnInit,OnDestroy   {
   sub!: Subscription;
   @ViewChild( MatSort ) sort!: MatSort;
   
-  constructor(
-            private userService:UserService,
-            private searchService: SearchsService,
-            private dialog: MatDialog,
-            private modalService: ModalService
-        ){}
+
   public imagePath: string = 'assets/images/avatar_image.jpg';
   public alertActivate: boolean = false;
+  public userRoles: string[] = ['USER_ROLE','ADMIN_ROLE']
   public userActive!: User;
   public users: User [] = [];
   public dataSource: any;
@@ -71,13 +67,25 @@ export class UsersComponent implements OnInit,OnDestroy   {
   ];
 
 
+  constructor(
+    private userService:UserService,
+    private searchService: SearchsService,
+    private modalService: ModalService
+){}
 
+  openModalUploadImg( user: User ){
 
-  
+    this.sub = this.modalService
+    .openModal(this.entry, `If you want to change the profile picture of user ${ user.name }`, 'Please click on the icon below', true, user)
+    .subscribe(( resp:any) => {
+
+    })
+
+  }
 
   openModal( user:User ) {
     this.sub = this.modalService
-      .openModal(this.entry, `Are you sure you want to delete the user ${ user.name } ?`, 'Please , click confirm or close')
+      .openModal(this.entry, `Are you sure you want to delete the user ${ user.name } ?`, 'Please , click confirm or close', false )
       .subscribe(( resp:any) => {
         console.log(resp)
         if( resp === 'confirm'){
@@ -134,7 +142,29 @@ export class UsersComponent implements OnInit,OnDestroy   {
     this.displayedColumns = this.columnNames.map(( x:any ) => x.id);
     this.loading = true;
     this.initLoadUser();
-    
+    this.modalService.newImage
+                      .pipe(
+                        delay(100)
+                      )
+                      .subscribe(img => {
+                          this.initLoadUser();
+
+                      })
+  }
+
+
+  changeRole( user: User ){
+
+    this.userService.saveUser( user )
+                      .subscribe({
+                        next: resp => {
+                          console.log(resp);
+                        },
+                        error: error => {
+                          
+                        }
+                      })
+
   }
 
   initLoadUser(){

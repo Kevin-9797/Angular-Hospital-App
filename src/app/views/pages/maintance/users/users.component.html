@@ -33,11 +33,11 @@
       <th mat-header-cell *matHeaderCellDef> User Image </th>
       <td mat-cell *matCellDef="let element">
 
-        <button *ngIf="element.img !== undefined; else viewImage " mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <button *ngIf="element.img !== undefined; else viewImage " (click)="openModalUploadImg( element )" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
           <img class="img-profile" [src]="element.img" alt="">
         </button>
         <ng-template #viewImage>
-          <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+          <button mat-icon-button class="example-icon" (click)="openModalUploadImg( element )" aria-label="Example icon-button with share icon">
             <img class="img-profile" [src]="imagePath" alt="">
           </button>
     
@@ -59,7 +59,16 @@
     
     <ng-container matColumnDef="role">
       <th mat-header-cell *matHeaderCellDef> Role </th>
-      <td mat-cell *matCellDef="let element"> {{ element.role }} </td>
+      <td mat-cell *matCellDef="let element"> 
+        <mat-form-field appearance="fill">
+          <select (change)="changeRole( element )" [(ngModel)]="element.role" matNativeControl >
+          
+            <option [value]="'USER_ROLE'" >USER_ROLE</option>
+            <option [value]="'ADMIN_ROLE'" >ADMIN_ROLE</option>
+
+          </select>
+        </mat-form-field>  
+      </td>
     </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell  *matHeaderCellDef > Delete </mat-header-cell>

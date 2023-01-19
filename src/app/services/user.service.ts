@@ -56,12 +56,15 @@ export class UserService implements OnInit{
       ...data,
       role: this.user.role || ''
     }
-    return this.http.put(`${this.baseUrl}/users/${ this.user.uid }`,data, this.headers)
-
-
+    return this.http.put(`${this.baseUrl}/users/${ this.user.uid }`,data, this.headers )
 
   }
 
+  saveUser( user: User ){
+
+    return this.http.put(`${this.baseUrl}/users/${ user.uid }`,user, this.headers )
+    
+  }
   loginGoogle( token:Token ){
  
     return this.http.post(`${this.baseUrl}/auth/google`,token)

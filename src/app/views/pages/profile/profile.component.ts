@@ -86,11 +86,9 @@ export class ProfileComponent implements OnInit {
                 error: err => {
                   console.log(err)
                   Swal.fire('Error',err.msg,'error')
-  
+                  
                 }
               })
-
-
     }else{
 
       Swal.fire('Error','File not exist','error')
