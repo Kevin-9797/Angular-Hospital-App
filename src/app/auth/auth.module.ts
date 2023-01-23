@@ -7,9 +7,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
-import { ComponentsModule } from '../components/components.module';
-import { InputComponent } from '../components/input/input.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -27,9 +25,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     FormsModule,
     AuthRoutingModule,
     ReactiveFormsModule,
-    MaterialModule,
-    ComponentsModule,
     RouterModule,
+    MaterialModule
     
   ]
 })

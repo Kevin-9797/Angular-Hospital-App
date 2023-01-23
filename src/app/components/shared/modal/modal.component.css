@@ -12,6 +12,14 @@
         padding: 10px;
 
 }
+.vw100{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .modal-line-style{
     width: 100%;
     border-radius: 15px 15px 0px 0px;

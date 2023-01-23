@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { map, Observable } from 'rxjs';
 import { UserService } from './user.service';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class FileUploadService {
   updateImg(
     archive: File,
     type: 'users' | 'medicals' | 'hospitals',
-    id: string
+    id?: string
   ): Observable<any> {
     const url = `${ this.baseUrl }/uploads/${ type }/${ id }`;
     const formData: FormData = new FormData();

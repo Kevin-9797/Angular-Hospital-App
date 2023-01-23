@@ -37,6 +37,7 @@ import {
 
 } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+
 @NgModule({
   declarations: [],
   exports: [

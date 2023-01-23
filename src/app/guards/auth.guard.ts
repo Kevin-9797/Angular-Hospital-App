@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
   constructor( private userService:UserService, private router:Router ){}
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot):Observable<boolean> {
+    state: RouterStateSnapshot): Observable<boolean> {
 
       
     return this.userService.tokenValidate()

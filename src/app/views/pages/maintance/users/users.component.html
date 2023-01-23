@@ -9,7 +9,6 @@
 
 
 <div class="mat-elevation-z8">
-
   <div class="input-search">
     <span></span>
     <mat-form-field appearance="outline">
@@ -18,9 +17,9 @@
     </mat-form-field>
   
   </div>
-  <div class="spinner">
-    <mat-spinner *ngIf="loading"></mat-spinner>
-    
+
+  <div class="spinner" *ngIf="loading">
+    <mat-spinner></mat-spinner>
   </div>
   <table *ngIf="!loading" mat-table [dataSource]="dataSource">
 
@@ -103,7 +102,6 @@
   <mat-paginator 
                 #paginator
                 [pageSize]="pageSize"
-                (page)="onPaginateChange( $event )"
                 [pageSizeOptions]="pageSizeOptions"
                 [showFirstLastButtons]="true"
                 aria-label="Select page of periodic elements">

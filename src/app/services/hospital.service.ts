@@ -38,4 +38,35 @@ export class HospitalService {
   }
 
 
+  createHospital( name: string ){
+
+    const url: string = `${ this.baseUrl }/hospitals/`;
+
+    return this.http.post<Hospital>( url , { name }, this.headers )
+                .pipe(
+                  map( ( resp:any ) => resp.hospitalDb )
+                )
+  }
+
+
+  updateHospital( _id: string , name: string ){
+
+    const url: string = `${ this.baseUrl }/hospitals/${ _id }`;
+
+    return this.http.put<Hospital>( url , { name },this.headers)
+    .pipe(
+      map( ( resp:any ) => {
+       return resp.hospital;
+      })
+    )
+  }
+
+  deleteHospital( _id: string ){
+
+    const url: string = `${ this.baseUrl }/hospitals/${ _id }`;
+
+    return this.http.delete( url , this.headers )
+  }
+
+
 }

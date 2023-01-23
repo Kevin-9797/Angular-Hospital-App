@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
 import { map } from 'rxjs';
+import { Hospital } from '../models/hospital.model';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +30,7 @@ export class SearchsService {
     const url = `${ this.baseUrl }/search/${ type }/${ term }`;
 
 
-    return this.http.get( url , this.headers )
+    return this.http.get<User[] | Hospital[]>( url , this.headers )
             .pipe(
               map( ( resp: any ) => {
                 return resp.results

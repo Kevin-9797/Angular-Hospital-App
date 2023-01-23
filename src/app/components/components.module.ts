@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InputComponent } from './input/input.component';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ModalComponent } from './shared/modal/modal.component';
+import { SnackBarComponent } from './shared/snack-bar/snack-bar.component';
 
 
 
 @NgModule({
   declarations: [
-    InputComponent,
-    ModalComponent
+    ModalComponent,
+    SnackBarComponent
   ],
   imports: [
     CommonModule,
@@ -19,8 +19,8 @@ import { ModalComponent } from './shared/modal/modal.component';
     FormsModule
   ],
   exports: [
-    InputComponent,
-    ModalComponent
+    ModalComponent,
+    SnackBarComponent
   ]
 })
 export class ComponentsModule { }

@@ -12,6 +12,10 @@ import { UsersComponent } from './pages/maintance/users/users.component';
 import { ComponentsModule } from '../components/components.module';
 import { MatSelectModule } from '@angular/material/select';
 import { HospitalsComponent } from './pages/maintance/hospitals/hospitals.component';
+import { SnackBarComponent } from '../components/shared/snack-bar/snack-bar.component';
+import { SnackBarService } from '../services/snack-bar.service';
+import { MedicalsComponent } from './pages/maintance/medicals/medicals.component';
+import { MedicalProfileComponent } from './pages/maintance/medical-profile/medical-profile.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,9 @@ import { HospitalsComponent } from './pages/maintance/hospitals/hospitals.compon
     DrawerComponent,
     ProfileComponent,
     UsersComponent,
-    HospitalsComponent
+    HospitalsComponent,
+    MedicalsComponent,
+    MedicalProfileComponent,
   ],
   exports: [
     DashboardComponent,
@@ -35,7 +41,10 @@ import { HospitalsComponent } from './pages/maintance/hospitals/hospitals.compon
     FormsModule,
     RouterModule,
     ComponentsModule,
-    MatSelectModule
+    MatSelectModule,
+  ],
+  providers: [
+    SnackBarService
   ]
   
 })

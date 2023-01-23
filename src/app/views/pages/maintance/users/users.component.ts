@@ -10,6 +10,7 @@ import { map, debounceTime, delay } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { ModalService } from '../../../../services/modal.service';
+import { ColumnsTable } from '../../interfaces/components.interface';
  
 @Component({
   selector: 'app-users',
@@ -38,8 +39,8 @@ export class UsersComponent implements OnInit,OnDestroy   {
   public pageSize = 5;
   public loading: boolean = true;
   public pageSizeOptions = [5, 10, 25, 50];
-  public displayedColumns: [] = [];
-  public columnNames: any = [
+  public displayedColumns: ColumnsTable[] = [];
+  public columnNames: ColumnsTable[] = [
     {
       id: 'imgUrl',
       value: 'imgUser',
@@ -76,7 +77,7 @@ export class UsersComponent implements OnInit,OnDestroy   {
   openModalUploadImg( user: User ){
 
     this.sub = this.modalService
-    .openModal(this.entry, `If you want to change the profile picture of user ${ user.name }`, 'Please click on the icon below', true, user)
+    .openModal(this.entry, `If you want to change the profile picture of user ${ user.name }`, 'Please click on the icon below', 'file', user)
     .subscribe(( resp:any) => {
 
     })
@@ -85,7 +86,7 @@ export class UsersComponent implements OnInit,OnDestroy   {
 
   openModal( user:User ) {
     this.sub = this.modalService
-      .openModal(this.entry, `Are you sure you want to delete the user ${ user.name } ?`, 'Please , click confirm or close', false )
+      .openModal(this.entry, `Are you sure you want to delete the user ${ user.name } ?`, 'Please , click confirm or close', 'confirmation' )
       .subscribe(( resp:any) => {
         console.log(resp)
         if( resp === 'confirm'){
@@ -112,33 +113,8 @@ export class UsersComponent implements OnInit,OnDestroy   {
   ngOnInit(): void {
     
     
-    fromEvent( this.inputSearch.nativeElement , 'input')
-      .pipe(
-        // Tomamos las letras ingresadas en el input
-        map((k: any ) => {
-            this.loading = true;
-            return k.target['value'];
-        }),
-        // Seleccionamos un tiempo en milisegundos antes de continuar la ejecución luego de que se presionó la última letra, si hay cambios en el input vuelve a empezar a contar
-        debounceTime(1500),
-        // Ahora si ejecutamos la busqueda del usuario con el total de letras en el input
-        // luego de que se dejara de escribir por 1,5 segundos
-      ).subscribe( val => {
-        if (val !== '') {
-          this.searchService.search( 'users', val )
-            .subscribe( ( users: any ) => {
-              console.log(users)
-              this.users = users;
-              this.dataSource = new MatTableDataSource(users);
-              this.dataSource.paginator = this.paginator;
-              this.loading = false;
-            });
-        } else {
-          this.initLoadUser();
-          return;
-        }
-      });
-
+    
+    this.searchEvent();
     this.displayedColumns = this.columnNames.map(( x:any ) => x.id);
     this.loading = true;
     this.initLoadUser();
@@ -149,9 +125,40 @@ export class UsersComponent implements OnInit,OnDestroy   {
                       .subscribe(img => {
                           this.initLoadUser();
 
-                      })
+                      }) //aqui nos suscribrimos al modal para saber si hemos cambiado la foto de algun usuario 
+
   }
 
+  searchEvent(){
+
+    fromEvent( this.inputSearch.nativeElement , 'input')
+    .pipe(
+      // Tomamos las letras ingresadas en el input
+      map((k: any ) => {
+          this.loading = true;
+          return k.target['value'];
+      }),
+      // Seleccionamos un tiempo en milisegundos antes de continuar la ejecución luego de que se presionó la última letra, si hay cambios en el input vuelve a empezar a contar
+      debounceTime(1500),
+      // Ahora si ejecutamos la busqueda del usuario con el total de letras en el input
+      // luego de que se dejara de escribir por 1,5 segundos
+    ).subscribe( val => {
+      if (val !== '') {
+        this.searchService.search( 'users', val )
+          .subscribe( ( users: any ) => {
+            console.log(users)
+            this.users = users;
+            this.dataSource = new MatTableDataSource(users);
+            this.dataSource.paginator = this.paginator;
+            this.loading = false;
+          });
+      } else {
+        this.initLoadUser();
+        return;
+      }
+    });
+
+  }
 
   changeRole( user: User ){
 
